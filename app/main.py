@@ -9,17 +9,14 @@ class Person:
 
 def create_person_list(people: list) -> list:
     Person.people.clear()
-    for person in people:
-        name = person.get("name")
-        age = person.get("age")
-        Person(name, age)
-    for person in people:
-        name = person.get("name")
-        wife = person.get("wife")
-        husband = person.get("husband")
-        person_instance = Person.people[name]
+    person_list = [Person(p.get("name"), p.get("age")) for p in people]
+    for person_data in people:
+        person_instance = Person.people.get(person_data.get("name"))
+        wife = person_data.get("wife")
+        husband = person_data.get("husband")
         if wife:
-            person_instance.wife = Person.people[wife]
+            person_instance.wife = Person.people.get(wife)
         if husband:
-            person_instance.husband = Person.people[husband]
-    return list(Person.people.values())
+            person_instance.husband = Person.people.get(husband)
+
+    return person_list
